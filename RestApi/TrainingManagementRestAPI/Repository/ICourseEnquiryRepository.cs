@@ -12,6 +12,5 @@ namespace TrainingManagementRestAPI.Repository
         Task<int> AddCourseEnquiry(TblCourseEnquiry CourseEnquiry);
         Task<TblCourseEnquiry> DeleteCourseEnquiry(int id);
         Task UpdateCourseEnquiry(TblCourseEnquiry CourseEnquiry);
-        Task<List<TblCourseEnquiry>> GetCourseEnquiryById(int id);
     }
 }

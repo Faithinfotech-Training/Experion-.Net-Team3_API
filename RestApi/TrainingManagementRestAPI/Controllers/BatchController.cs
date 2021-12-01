@@ -13,25 +13,27 @@ namespace TrainingManagementRestAPI.Controllers
     [ApiController]
     public class BatchController : ControllerBase
     {
-        IBatchRepository BatchRepository;
-        public BatchController(IBatchRepository _p)
-        {
-            BatchRepository = _p;
-        }
 
-        #region GetBatches()
+        IBatchRepository batchRepository;
+        //constructor dependency injection
+        public BatchController(IBatchRepository _c)
+        {
+            batchRepository = _c;
+        }
+        //Get all batch
+        #region Get Batch
         [HttpGet]
-        [Route("GetBatches")]
         public async Task<IActionResult> GetBatches()
         {
+
             try
             {
-                var Batches = await BatchRepository.GetBatches();
-                if (Batches == null)
+                var batches = await batchRepository.GetBatches();
+                if (batches == null)
                 {
                     return NotFound();
                 }
-                return Ok(Batches);
+                return Ok(batches);
             }
             catch (Exception)
             {
@@ -40,19 +42,19 @@ namespace TrainingManagementRestAPI.Controllers
         }
         #endregion
 
-        #region AddBatch()
+        //Add new batch
+        #region Add Batch
         [HttpPost]
-        [Route("AddBatch")]
         public async Task<IActionResult> AddBatch([FromBody] TblBatch model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var BatchId = await BatchRepository.AddBatch(model);
-                    if (BatchId > 0)
+                    var batchId = await batchRepository.AddBatch(model);
+                    if (batchId > 0)
                     {
-                        return Ok(BatchId);
+                        return Ok(batchId);
                     }
                     else
                     {
@@ -65,49 +67,91 @@ namespace TrainingManagementRestAPI.Controllers
                 }
             }
             return BadRequest();
-
         }
         #endregion
-        #region UpdateBatch();
+
+        //Update Batch
+        #region Update Batch
         [HttpPut]
-        [Route("UpdateBatch")]
         public async Task<IActionResult> UpdateBatch([FromBody] TblBatch model)
         {
+            //check the validation of body
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await BatchRepository.UpdateBatch(model);
+                    await batchRepository.UpdateBatch(model);
                     return Ok();
                 }
                 catch (Exception)
                 {
                     return BadRequest();
                 }
-
             }
             return BadRequest();
         }
         #endregion
-        #region DeleteBatch
-        [HttpDelete]
-        [Route("DeleteBatch")]
+
+        //Delete Batch
+        #region Delete Batch
+
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBatch(int id)
         {
-            try
+            //Check the validation of body
+            if (ModelState.IsValid)
             {
-                var enq = await BatchRepository.DeleteBatch(id);
-                if (enq == null)
+                try
                 {
-                    return NotFound();
+                    await batchRepository.DeleteBatch(id);
+                    return Ok();
                 }
-                return Ok(enq);
+                catch (Exception)
+                {
+                    return BadRequest();
+                }
             }
-            catch (Exception)
+            return BadRequest();
+        }
+
+
+        #endregion
+
+        //Get Batch By Id
+        #region GetBatchById
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBatchById(int id)
+
+        {
+
+            try
+
             {
+
+                var batch = await batchRepository.GetBatchById(id);
+
+                if (batch == null)
+
+                {
+
+                    return NotFound();
+
+                }
+
+                return Ok(batch);
+
+            }
+
+            catch (Exception)
+
+            {
+
                 return BadRequest();
+
             }
         }
+
         #endregion
     }
 }

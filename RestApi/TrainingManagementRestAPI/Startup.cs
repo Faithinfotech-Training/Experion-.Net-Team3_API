@@ -43,6 +43,7 @@ namespace TrainingManagementRestAPI
             services.AddScoped<ILeadRepository, LeadRepository>();
             services.AddScoped<ICourseEnquiryRepository, CourseEnquiryRepository>();
             services.AddScoped<IResourceEnquiryRepository, ResourceEnquiryRepository>();
+            services.AddScoped<IBatchRepository, BatchRepository>();
 
             //jwt
 
@@ -51,13 +52,6 @@ namespace TrainingManagementRestAPI
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
-
-
-
-
-
-
-
         {
             ValidateIssuer = true,
             ValidateAudience = true,

@@ -109,25 +109,6 @@ namespace TrainingManagementRestAPI.Controllers
             }
         }
         #endregion
-        #region getcourseenquirybyid()
-        [HttpGet]
-        [Route("getcourseenquirybyid")]
-        public async Task<IActionResult> GetCourseEnquiryById(int id)
-        {
-            try
-            {
-                var exp = await CourseEnquiryRepository.GetCourseEnquiryById(id);
-                if (exp == null)
-                {
-                    return NotFound();
-                }
-                return Ok(exp);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-        #endregion
+        
     }
 }

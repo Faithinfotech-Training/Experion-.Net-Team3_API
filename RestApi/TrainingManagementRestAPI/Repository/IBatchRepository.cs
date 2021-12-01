@@ -8,9 +8,19 @@ namespace TrainingManagementRestAPI.Repository
 {
     public interface IBatchRepository
     {
+        //Get all Batch
         Task<List<TblBatch>> GetBatches();
-        Task<int> AddBatch(TblBatch Batch);
-        Task<TblBatch> DeleteBatch(int id);
-        Task UpdateBatch(TblBatch Batch);
+
+        //Add a new batch
+        Task<int> AddBatch(TblBatch batch);
+
+        //Update batch
+        Task UpdateBatch(TblBatch batch);
+
+        //Delete Batch
+        Task DeleteBatch(int id);
+
+        //Get batch by id
+        Task<TblBatch> GetBatchById(int id);
     }
 }
