@@ -65,5 +65,45 @@ namespace TrainingManagementRestAPI.Repository
             }
         }
         #endregion
+
+
+        #region getelementbyid(id)
+
+        public async Task<List<TblResourceEnquiry>> GetResourceEnquiryById(int id)
+        {
+            if (db != null)
+            {
+                //LINQ
+                //join post and category
+
+
+
+
+
+                return await (from e in db.TblResourceEnquiry
+                              from d in db.TblResource
+                              from l in db.TblLead
+                              where e.ResourceEnquiryId == id && e.ResourceId == d.ResourceId && e.LeadId == l.LeadId
+                              select new TblResourceEnquiry
+                              {
+
+                                  ResourceEnquiryId = e.ResourceEnquiryId,
+                                  ResourceEnquiryStatus = e.ResourceEnquiryStatus,
+                                  ResourceId = d.ResourceId,
+                                  LeadId = l.LeadId,
+                                  ResourceEnqiryDate = e.ResourceEnqiryDate,
+
+                              }).ToListAsync();
+
+
+
+
+            }
+            return null;
+
+
+
+        }
+        #endregion
     }
 }

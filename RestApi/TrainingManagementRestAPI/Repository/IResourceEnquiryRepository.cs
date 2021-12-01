@@ -12,5 +12,6 @@ namespace TrainingManagementRestAPI.Repository
         Task<int> AddResourceEnquiry(TblResourceEnquiry ResourceEnquiry);
         Task<TblResourceEnquiry> DeleteResourceEnquiry(int id);
         Task UpdateResourceEnquiry(TblResourceEnquiry ResourceEnquiry);
+        Task<List<TblResourceEnquiry>> GetResourceEnquiryById(int id);
     }
 }
