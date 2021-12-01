@@ -11,13 +11,14 @@ namespace TrainingManagementRestAPI.Repository
     {
 
         TrainingAcademyDBContext db;
-
+        //constructor dependency injection
         public SalesPipelineRepository(TrainingAcademyDBContext _db)
         {
             db = _db;
         }
 
-        #region GetSalesPipelines()
+        //get Cources
+        #region Get SalesPipelines
         public async Task<List<TblSalesPipeline>> GetSalesPipelines()
         {
             if (db != null)
@@ -28,43 +29,69 @@ namespace TrainingManagementRestAPI.Repository
         }
         #endregion
 
-        #region AddSalesPipeline()
-        public async Task<int> AddSalesPipeline(TblSalesPipeline SalesPipeline)
+        //Add Cource
+        #region Add SalesPipeline
+        public async Task<int> AddSalesPipeline(TblSalesPipeline salespipeline)
         {
             if (db != null)
             {
-                await db.TblSalesPipeline.AddAsync(SalesPipeline);
+                await db.TblSalesPipeline.AddAsync(salespipeline);
                 await db.SaveChangesAsync();
-                return SalesPipeline.SalesPipelineId;
+                return salespipeline.SalesPipelineId;
+
             }
             return 0;
         }
         #endregion
 
-        #region DeleteSalesPipeline()
-        public async Task<TblSalesPipeline> DeleteSalesPipeline(int id)
+        //Update Cource
+        #region Update SalesPipeline
+        public async Task UpdateSalesPipeline(TblSalesPipeline salespipeline)
         {
             if (db != null)
             {
-                TblSalesPipeline dbSalesPipeline = db.TblSalesPipeline.Find(id);
-                db.TblSalesPipeline.Remove(dbSalesPipeline);
-                db.SaveChanges();
-                return dbSalesPipeline;
+                db.TblSalesPipeline.Update(salespipeline);
+                await db.SaveChangesAsync();//commit the transaction
+
+
+
+            }
+        }
+
+
+        #endregion
+
+        //Delete Cource
+        #region Delete SalesPipeline
+        public async Task DeleteSalesPipeline(int id)
+        {
+
+
+            TblSalesPipeline salespipeline = db.TblSalesPipeline.FirstOrDefault(cid => cid.SalesPipelineId == id);
+            if (salespipeline != null)
+            {
+                db.TblSalesPipeline.Remove(salespipeline);
+                await db.SaveChangesAsync();
+
+            }
+        }
+        #endregion
+
+        //get cource by id
+        #region Get salespipeline by id
+        public async Task<TblSalesPipeline> GetSalesPipelineById(int id)
+        {
+            if (db != null)
+            {
+                TblSalesPipeline salespipeline = await db.TblSalesPipeline.FindAsync(id);
+                return salespipeline;
+
             }
             return null;
         }
         #endregion
 
-        #region UpdateSalesPipeline()
-        public async Task UpdateSalesPipeline(TblSalesPipeline SalesPipeline)
-        {
-            if (db != null)
-            {
-                db.TblSalesPipeline.Update(SalesPipeline);
-                await db.SaveChangesAsync();
-            }
-        }
-        #endregion
+
 
     }
 }

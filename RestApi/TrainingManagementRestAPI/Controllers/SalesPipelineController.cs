@@ -13,25 +13,27 @@ namespace TrainingManagementRestAPI.Controllers
     [ApiController]
     public class SalesPipelineController : ControllerBase
     {
-        ISalesPipelineRepository SalesPipelineRepository;
-        public SalesPipelineController(ISalesPipelineRepository _p)
-        {
-            SalesPipelineRepository = _p;
-        }
 
-        #region GetSalesPipelines()
+        ISalesPipelineRepository salespipelineRepository;
+        //constructor dependency injection
+        public SalesPipelineController(ISalesPipelineRepository _c)
+        {
+            salespipelineRepository = _c;
+        }
+        //Get all salespipeline
+        #region Get SalesPipeline
         [HttpGet]
-        [Route("GetSalesPipelines")]
         public async Task<IActionResult> GetSalesPipelines()
         {
+
             try
             {
-                var SalesPipelines = await SalesPipelineRepository.GetSalesPipelines();
-                if (SalesPipelines == null)
+                var salespipelines = await salespipelineRepository.GetSalesPipelines();
+                if (salespipelines == null)
                 {
                     return NotFound();
                 }
-                return Ok(SalesPipelines);
+                return Ok(salespipelines);
             }
             catch (Exception)
             {
@@ -40,19 +42,19 @@ namespace TrainingManagementRestAPI.Controllers
         }
         #endregion
 
-        #region AddSalesPipeline()
+        //Add new salespipeline
+        #region Add SalesPipeline
         [HttpPost]
-        [Route("AddSalesPipeline")]
         public async Task<IActionResult> AddSalesPipeline([FromBody] TblSalesPipeline model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var SalesPipelineId = await SalesPipelineRepository.AddSalesPipeline(model);
-                    if (SalesPipelineId > 0)
+                    var salespipelineId = await salespipelineRepository.AddSalesPipeline(model);
+                    if (salespipelineId > 0)
                     {
-                        return Ok(SalesPipelineId);
+                        return Ok(salespipelineId);
                     }
                     else
                     {
@@ -65,49 +67,91 @@ namespace TrainingManagementRestAPI.Controllers
                 }
             }
             return BadRequest();
-
         }
         #endregion
-        #region UpdateSalesPipeline();
+
+        //Update SalesPipeline
+        #region Update SalesPipeline
         [HttpPut]
-        [Route("UpdateSalesPipeline")]
         public async Task<IActionResult> UpdateSalesPipeline([FromBody] TblSalesPipeline model)
         {
+            //check the validation of body
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await SalesPipelineRepository.UpdateSalesPipeline(model);
+                    await salespipelineRepository.UpdateSalesPipeline(model);
                     return Ok();
                 }
                 catch (Exception)
                 {
                     return BadRequest();
                 }
-
             }
             return BadRequest();
         }
         #endregion
-        #region DeleteSalesPipeline
-        [HttpDelete]
-        [Route("DeleteSalesPipeline")]
+
+        //Delete SalesPipeline
+        #region Delete SalesPipeline
+
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSalesPipeline(int id)
         {
-            try
+            //Check the validation of body
+            if (ModelState.IsValid)
             {
-                var enq = await SalesPipelineRepository.DeleteSalesPipeline(id);
-                if (enq == null)
+                try
                 {
-                    return NotFound();
+                    await salespipelineRepository.DeleteSalesPipeline(id);
+                    return Ok();
                 }
-                return Ok(enq);
+                catch (Exception)
+                {
+                    return BadRequest();
+                }
             }
-            catch (Exception)
+            return BadRequest();
+        }
+
+
+        #endregion
+
+        //Get SalesPipeline By Id
+        #region GetSalesPipelineById
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetSalesPipelineById(int id)
+
+        {
+
+            try
+
             {
+
+                var salespipeline = await salespipelineRepository.GetSalesPipelineById(id);
+
+                if (salespipeline == null)
+
+                {
+
+                    return NotFound();
+
+                }
+
+                return Ok(salespipeline);
+
+            }
+
+            catch (Exception)
+
+            {
+
                 return BadRequest();
+
             }
         }
+
         #endregion
     }
 }
