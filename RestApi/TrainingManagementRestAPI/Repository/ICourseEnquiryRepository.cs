@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TrainingManagementRestAPI.Models;
+using TrainingManagementRestAPI.ViewModel;
 
 namespace TrainingManagementRestAPI.Repository
 {
@@ -12,5 +13,6 @@ namespace TrainingManagementRestAPI.Repository
         Task<int> AddCourseEnquiry(TblCourseEnquiry CourseEnquiry);
         Task<TblCourseEnquiry> DeleteCourseEnquiry(int id);
         Task UpdateCourseEnquiry(TblCourseEnquiry CourseEnquiry);
+        Task<List<CourseEnquiryViewModel>> GetAllCourseEnquiry();
     }
 }

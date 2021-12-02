@@ -198,36 +198,7 @@ namespace TrainingManagementRestAPI.Controllers
 
 
         #endregion
-        #region Add user
-        [HttpPost]
-        [Route("AddUser")]
-        public async Task<IActionResult> AddUser([FromBody] TblUser model)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var UserId = await leadRepository.AddUser(model);
-                    if (UserId > 0)
-                    {
-                        return Ok(UserId);
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-                catch (Exception)
-                {
-                    return BadRequest();
-                }
-            }
-            return BadRequest();
-
-
-
-        }
-        #endregion
+      
     }
 }
 

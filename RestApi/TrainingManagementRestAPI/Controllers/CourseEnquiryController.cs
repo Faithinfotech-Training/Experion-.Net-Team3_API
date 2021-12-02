@@ -109,6 +109,28 @@ namespace TrainingManagementRestAPI.Controllers
             }
         }
         #endregion
-        
+
+        #region GetAllCourseEnquiry
+        [HttpGet]
+        [Route("GetAllCourseEnquiry")]
+        public async Task<IActionResult> GetAllCourseEnquiry()
+        {
+            try
+            {
+                var details = await CourseEnquiryRepository.GetAllCourseEnquiry();
+                if (details == null)
+                {
+                    return NotFound();
+                }
+                return Ok(details);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+        }
+        #endregion
+
     }
 }
