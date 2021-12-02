@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TrainingManagementRestAPI.Models;
+using TrainingManagementRestAPI.ViewModel;
 
 namespace TrainingManagementRestAPI.Repository
 {
@@ -13,5 +14,7 @@ namespace TrainingManagementRestAPI.Repository
         Task<TblResourceEnquiry> DeleteResourceEnquiry(int id);
         Task UpdateResourceEnquiry(TblResourceEnquiry ResourceEnquiry);
         Task<List<TblResourceEnquiry>> GetResourceEnquiryById(int id);
+
+        Task<List<ResourceEnquiryViewModel>> GetAllResourceEnquiry();
     }
 }

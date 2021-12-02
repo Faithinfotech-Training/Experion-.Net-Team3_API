@@ -129,5 +129,31 @@ namespace TrainingManagementRestAPI.Controllers
             }
         }
         #endregion
+
+       
+        #region GetAllResourceEnquiry
+        [HttpGet]
+        [Route("GetAllResourceEnquiry")]
+        public async Task<IActionResult> GetAllResourceEnquiry()
+        {
+            try
+            {
+                var details = await ResourceEnquiryRepository.GetAllResourceEnquiry();
+                if (details == null)
+                {
+                    return NotFound();
+                }
+                return Ok(details);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+        #endregion
+
+
+
+
     }
 }

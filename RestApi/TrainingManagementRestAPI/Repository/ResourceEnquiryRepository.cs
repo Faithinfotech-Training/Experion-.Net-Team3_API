@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TrainingManagementRestAPI.Models;
+using TrainingManagementRestAPI.ViewModel;
 
 namespace TrainingManagementRestAPI.Repository
 {
@@ -103,6 +104,35 @@ namespace TrainingManagementRestAPI.Repository
 
 
 
+        }
+
+
+        #endregion
+
+        #region Get All Resource Enquiry
+        public async Task<List<ResourceEnquiryViewModel>> GetAllResourceEnquiry()
+        {
+            if (db != null)
+            {
+                return await(from e in db.TblResourceEnquiry
+                             from l in db.TblLead
+                             from r in db.TblResource
+                             where e.LeadId == l.LeadId && e.ResourceId == r.ResourceId
+                             select new ResourceEnquiryViewModel
+                             {
+                                ResourceEnquiryId = e.ResourceEnquiryId,
+                                 ResourceId = e.ResourceId,
+                                 LeadId = e.LeadId,
+                                 ResourceEnquiryStatus = e.ResourceEnquiryStatus,
+                                 ResourceEnqiryDate = e.ResourceEnqiryDate,
+                                 ResourceName = r.ResourceName,
+                                 LeadName = l.LeadName
+                             }).ToListAsync();
+
+
+
+            }
+            return null;
         }
         #endregion
     }
