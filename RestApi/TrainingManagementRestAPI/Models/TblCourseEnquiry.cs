@@ -14,6 +14,7 @@ namespace TrainingManagementRestAPI.Models
         public int? LeadId { get; set; }
         public string CourseEnquiryStatus { get; set; }
         public DateTime? CourseEnqiryDate { get; set; }
+        public string EnquiryDescription { get; set; }
 
         public virtual TblCourse Course { get; set; }
         public virtual TblLead Lead { get; set; }

@@ -31,22 +31,22 @@ namespace TrainingManagementRestAPI.Models
         public virtual DbSet<TblTrainee> TblTrainee { get; set; }
         public virtual DbSet<TblTrainer> TblTrainer { get; set; }
         public virtual DbSet<TblUser> TblUser { get; set; }
-/*
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+       /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=SNEHAP\\SQLEXPRESS; Initial Catalog=TrainingAcademyDB; Integrated security=True");
+
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-S5GL28D; Initial Catalog=TrainingAcademyDB; Integrated security=True");
             }
-        }
-*/
+        }*/
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TblBatch>(entity =>
             {
                 entity.HasKey(e => e.BatchId)
-                    .HasName("PK__TblBatch__5D55CE58F212060A");
+                    .HasName("PK__TblBatch__5D55CE5882435615");
 
                 entity.Property(e => e.BatchName)
                     .HasMaxLength(20)
@@ -56,23 +56,23 @@ namespace TrainingManagementRestAPI.Models
             modelBuilder.Entity<TblBatchCourse>(entity =>
             {
                 entity.HasKey(e => e.BatchCourseId)
-                    .HasName("PK__TblBatch__3878FF91767BA864");
+                    .HasName("PK__TblBatch__3878FF913CB3657D");
 
                 entity.HasOne(d => d.Batch)
                     .WithMany(p => p.TblBatchCourse)
                     .HasForeignKey(d => d.BatchId)
-                    .HasConstraintName("FK__TblBatchC__Batch__59063A47");
+                    .HasConstraintName("FK__TblBatchC__Batch__44FF419A");
 
                 entity.HasOne(d => d.Course)
                     .WithMany(p => p.TblBatchCourse)
                     .HasForeignKey(d => d.CourseId)
-                    .HasConstraintName("FK__TblBatchC__Cours__59FA5E80");
+                    .HasConstraintName("FK__TblBatchC__Cours__45F365D3");
             });
 
             modelBuilder.Entity<TblCourse>(entity =>
             {
                 entity.HasKey(e => e.CourseId)
-                    .HasName("PK__TblCours__C92D71A7F4B1441B");
+                    .HasName("PK__TblCours__C92D71A7672281B7");
 
                 entity.Property(e => e.CourseDescription).IsUnicode(false);
 
@@ -85,13 +85,13 @@ namespace TrainingManagementRestAPI.Models
                 entity.HasOne(d => d.Trainer)
                     .WithMany(p => p.TblCourse)
                     .HasForeignKey(d => d.TrainerId)
-                    .HasConstraintName("FK__TblCourse__Train__4222D4EF");
+                    .HasConstraintName("FK__TblCourse__Train__2E1BDC42");
             });
 
             modelBuilder.Entity<TblCourseEnquiry>(entity =>
             {
                 entity.HasKey(e => e.CourseEnquiryId)
-                    .HasName("PK__TblCours__9B00A0CE3381BBDB");
+                    .HasName("PK__TblCours__9B00A0CE6D54D9FB");
 
                 entity.Property(e => e.CourseEnqiryDate).HasColumnType("date");
 
@@ -99,21 +99,27 @@ namespace TrainingManagementRestAPI.Models
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
+                entity.Property(e => e.EnquiryDescription)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
                 entity.HasOne(d => d.Course)
                     .WithMany(p => p.TblCourseEnquiry)
                     .HasForeignKey(d => d.CourseId)
-                    .HasConstraintName("FK__TblCourse__Cours__4CA06362");
+                    .HasConstraintName("FK__TblCourse__Cours__38996AB5");
 
                 entity.HasOne(d => d.Lead)
                     .WithMany(p => p.TblCourseEnquiry)
                     .HasForeignKey(d => d.LeadId)
-                    .HasConstraintName("FK__TblCourse__LeadI__4D94879B");
+                    .HasConstraintName("fk_lead_cenquiry");
             });
 
             modelBuilder.Entity<TblLead>(entity =>
             {
                 entity.HasKey(e => e.LeadId)
-                    .HasName("PK__TblLead__73EF78FA9A00D2A1");
+                    .HasName("PK__TblLead__73EF78FA333EF373");
+
+                entity.Property(e => e.LeadId).ValueGeneratedNever();
 
                 entity.Property(e => e.AddState)
                     .HasColumnName("Add_State")
@@ -143,12 +149,18 @@ namespace TrainingManagementRestAPI.Models
                 entity.Property(e => e.LeadName)
                     .HasMaxLength(25)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.Lead)
+                    .WithOne(p => p.TblLead)
+                    .HasForeignKey<TblLead>(d => d.LeadId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TblLead__LeadId__6477ECF3");
             });
 
             modelBuilder.Entity<TblResource>(entity =>
             {
                 entity.HasKey(e => e.ResourceId)
-                    .HasName("PK__TblResou__4ED1816F96F3EC51");
+                    .HasName("PK__TblResou__4ED1816F5B7C7A97");
 
                 entity.Property(e => e.ResourceDescription).IsUnicode(false);
 
@@ -162,7 +174,11 @@ namespace TrainingManagementRestAPI.Models
             modelBuilder.Entity<TblResourceEnquiry>(entity =>
             {
                 entity.HasKey(e => e.ResourceEnquiryId)
-                    .HasName("PK__TblResou__BA357E0FFD7A12B3");
+                    .HasName("PK__TblResou__BA357E0F2C11E101");
+
+                entity.Property(e => e.EnquiryDescription)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ResourceEnqiryDate).HasColumnType("date");
 
@@ -173,18 +189,18 @@ namespace TrainingManagementRestAPI.Models
                 entity.HasOne(d => d.Lead)
                     .WithMany(p => p.TblResourceEnquiry)
                     .HasForeignKey(d => d.LeadId)
-                    .HasConstraintName("FK__TblResour__LeadI__5165187F");
+                    .HasConstraintName("fk_lead_renquiry");
 
                 entity.HasOne(d => d.Resource)
                     .WithMany(p => p.TblResourceEnquiry)
                     .HasForeignKey(d => d.ResourceId)
-                    .HasConstraintName("FK__TblResour__Resou__5070F446");
+                    .HasConstraintName("FK__TblResour__Resou__3C69FB99");
             });
 
             modelBuilder.Entity<TblRole>(entity =>
             {
                 entity.HasKey(e => e.RoleId)
-                    .HasName("PK__TblRole__8AFACE1A8D686BC4");
+                    .HasName("PK__TblRole__8AFACE1A9779BB65");
 
                 entity.Property(e => e.RoleName)
                     .IsRequired()
@@ -195,7 +211,7 @@ namespace TrainingManagementRestAPI.Models
             modelBuilder.Entity<TblSalesPipeline>(entity =>
             {
                 entity.HasKey(e => e.SalesPipelineId)
-                    .HasName("PK__TblSales__EC8BF14E74737216");
+                    .HasName("PK__TblSales__EC8BF14EE99ED5D1");
 
                 entity.Property(e => e.CloseDate).HasColumnType("date");
 
@@ -212,29 +228,29 @@ namespace TrainingManagementRestAPI.Models
                 entity.HasOne(d => d.Lead)
                     .WithMany(p => p.TblSalesPipeline)
                     .HasForeignKey(d => d.LeadId)
-                    .HasConstraintName("FK__TblSalesP__LeadI__5441852A");
+                    .HasConstraintName("fk_lead_sp");
             });
 
             modelBuilder.Entity<TblTrainee>(entity =>
             {
                 entity.HasKey(e => e.TraineeId)
-                    .HasName("PK__TblTrain__3BA911CA6063029C");
+                    .HasName("PK__TblTrain__3BA911CA314FABCC");
 
                 entity.HasOne(d => d.Batch)
                     .WithMany(p => p.TblTrainee)
                     .HasForeignKey(d => d.BatchId)
-                    .HasConstraintName("FK__TblTraine__Batch__49C3F6B7");
+                    .HasConstraintName("FK__TblTraine__Batch__35BCFE0A");
 
                 entity.HasOne(d => d.Lead)
                     .WithMany(p => p.TblTrainee)
                     .HasForeignKey(d => d.LeadId)
-                    .HasConstraintName("FK__TblTraine__LeadI__48CFD27E");
+                    .HasConstraintName("fk_lead_trainee");
             });
 
             modelBuilder.Entity<TblTrainer>(entity =>
             {
                 entity.HasKey(e => e.TrainerId)
-                    .HasName("PK__TblTrain__366A1A7C45B38F51");
+                    .HasName("PK__TblTrain__366A1A7C8A38E555");
 
                 entity.Property(e => e.TrainerName)
                     .HasMaxLength(20)
@@ -244,20 +260,20 @@ namespace TrainingManagementRestAPI.Models
             modelBuilder.Entity<TblUser>(entity =>
             {
                 entity.HasKey(e => e.LoginId)
-                    .HasName("PK__TblUser__4DDA2818B6A15CB4");
+                    .HasName("PK__TblUser__4DDA2818DAB9619D");
 
                 entity.Property(e => e.UserName)
-                    .HasMaxLength(20)
+                    .HasMaxLength(30)
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserPassword)
-                    .HasMaxLength(20)
+                    .HasMaxLength(30)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.TblUser)
                     .HasForeignKey(d => d.RoleId)
-                    .HasConstraintName("FK_LOGIN");
+                    .HasConstraintName("FK__TblUser__RoleId__619B8048");
             });
 
             OnModelCreatingPartial(modelBuilder);

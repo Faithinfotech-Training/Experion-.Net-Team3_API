@@ -15,5 +15,6 @@ namespace TrainingManagementRestAPI.Models
         public int? RoleId { get; set; }
 
         public virtual TblRole Role { get; set; }
+        public virtual TblLead TblLead { get; set; }
     }
 }

@@ -29,6 +29,7 @@ namespace TrainingManagementRestAPI.Models
         public string HighestQualification { get; set; }
         public bool? IsActive { get; set; }
 
+        public virtual TblUser Lead { get; set; }
         public virtual ICollection<TblCourseEnquiry> TblCourseEnquiry { get; set; }
         public virtual ICollection<TblResourceEnquiry> TblResourceEnquiry { get; set; }
         public virtual ICollection<TblSalesPipeline> TblSalesPipeline { get; set; }

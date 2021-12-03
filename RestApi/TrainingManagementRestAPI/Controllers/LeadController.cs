@@ -49,7 +49,7 @@ namespace TrainingManagementRestAPI.Controllers
 
         #region Add lead
         [HttpPost]
-
+        [Route("addlead")]
         public async Task<IActionResult> AddLead([FromBody] TblLead model)
         {
             if (ModelState.IsValid)

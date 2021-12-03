@@ -27,8 +27,7 @@ namespace TrainingManagementRestAPI.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
+                
                     var UserId = await leadRepository.AddUser(model);
                     if (UserId > 0)
                     {
@@ -38,11 +37,8 @@ namespace TrainingManagementRestAPI.Controllers
                     {
                         return NotFound();
                     }
-                }
-                catch (Exception)
-                {
-                    return BadRequest();
-                }
+                
+                
             }
             return BadRequest();
 
