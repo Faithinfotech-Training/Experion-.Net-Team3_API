@@ -21,6 +21,7 @@ namespace TrainingManagementRestAPI.Models
         public int? TrainerId { get; set; }
         public bool? IsActive { get; set; }
         public string CourseDescription { get; set; }
+        public string CourseDuration { get; set; }
 
         public virtual TblTrainer Trainer { get; set; }
         public virtual ICollection<TblBatchCourse> TblBatchCourse { get; set; }

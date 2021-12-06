@@ -45,6 +45,7 @@ namespace TrainingManagementRestAPI
             services.AddScoped<IResourceEnquiryRepository, ResourceEnquiryRepository>();
             services.AddScoped<IBatchRepository, BatchRepository>();
             services.AddScoped<ISalesPipelineRepository, SalesPipelineRepository>();
+            services.AddScoped<ITraineeRepository, TraineeRepository>();
 
             //jwt
 
